@@ -28,6 +28,17 @@ Camiseta.prototype.personalizarNome = function(nome){
 function Caneca(nome, preco,material){
     Produto.call(this, nome, preco);
     this.material = material;
+    Object.defineProperty(this,'estoque',{
+        enumerable:true,
+        configurable: false,
+        get: function(){
+            return etoque;
+        },
+        set: function(valor){
+            if(typeof valor !== 'number') return;
+            estoque = valor;
+        }
+    });
 }
 
 Caneca.prototype = Object.create(Produto.prototype);
@@ -40,6 +51,7 @@ Caneca.prototype.mudarMaterial = function(novoNome){
 const produto = new Produto('Gen', 111);
 const camiseta = new Camiseta('Regata', 7.5, 'Preta');
 const caneca = new Caneca('Flu', 12.5, 'Porcelana');
+caneca.estoque = 100;
 console.log(produto);
 console.log(camiseta);
 console.log(caneca);

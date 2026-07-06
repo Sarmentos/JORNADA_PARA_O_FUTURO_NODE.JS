@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { trataErros } = require('./err/funcoesErro');
 
 const texto = process.argv;
 const link = texto[2];
@@ -8,8 +9,7 @@ fs.readFile(link, 'utf-8', (err, data) => {
         if(err) throw err;
         contaPalavras(data);
     }catch(err){
-        if(err.code === 'ENOENT') console.log('Arquivo não encontrado. Verifique o caminho e tente novamente.');
-        else console.log('Outro erro');
+        trataErros(err);
     }
 });
 
@@ -25,7 +25,6 @@ function contaPalavras(texto){
 function extraiPalavras(texto){
     return texto.toLowerCase().split('\n');
 }
-
 
 function limpaPalavras(palavra){
     return palavra.replace(/[.,\/#!$%^&*;:{}=\-_`~()]/g, '');
